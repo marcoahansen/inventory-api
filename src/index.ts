@@ -6,6 +6,11 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Banco conectado!");
+    app.listen(process.env.PORT, () => {
+      console.log(`Servidor rodando em http://localhost:${port}`);
+    });
+  })
+  .catch((error) => console.log("Erro ao conectar no banco: ", error));
